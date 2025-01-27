@@ -75,21 +75,14 @@ const HomePage = () => {
   useEffect(() => {
     fetchFeaturedProducts();
 
-    // Check if the website is being visited for the first time
-    const isFirstVisit = !localStorage.getItem("hasVisited");
-
-    if (isFirstVisit) {
-      localStorage.setItem("hasVisited", "true"); // Set a flag to indicate the user has visited
-
-      // Show the toast notification for first-time visitors
-      toast("This website is in test mode, please do not make any payments.", {
-        icon: "⚠️",
-        style: {
-          backgroundColor: "#ffcc00",
-          color: "#333",
-        },
-      });
-    }
+    // Show the toast notification every time the user visits the homepage
+    toast("This website is in test mode, please do not make any payments.", {
+      icon: "⚠️",
+      style: {
+        backgroundColor: "#ffcc00",
+        color: "#333",
+      },
+    });
   }, [fetchFeaturedProducts]);
 
   return (

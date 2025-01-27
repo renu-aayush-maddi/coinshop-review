@@ -1,4 +1,4 @@
-// import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
+// import { ShoppingCart, UserPlus, LogIn, LogOut, Lock, Home as HomeIcon, Mail as ContactIcon } from "lucide-react";
 // import { Link } from "react-router-dom";
 // import { useUserStore } from "../stores/useUserStore";
 // import {useCartStore} from "../stores/useCartStore"
@@ -71,6 +71,7 @@
 // 									className='bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 
 // 									rounded-md flex items-center transition duration-300 ease-in-out'
 // 								>
+                  
 // 									<UserPlus className='mr-2' size={18} />
 // 									Sign Up
 // 								</Link>
@@ -121,7 +122,7 @@ const Navbar = () => {
 
           <nav className="flex flex-wrap items-center gap-4"> 
             <Link to="/" className="flex items-center text-gray-300 hover:text-yellow-400 transition duration-300 ease-in-out"> 
-              <HomeIcon className="mr-2" size={18} /> {/* Home icon from Lucide React */}
+              {/* <HomeIcon className="mr-2" size={18} /> Home icon from Lucide React */}
               Home 
             </Link> 
 
@@ -155,7 +156,7 @@ const Navbar = () => {
               to="/contact" 
               className="flex items-center text-gray-300 hover:text-yellow-400 transition duration-300 ease-in-out" 
             > 
-              <ContactIcon className="w-6 h-6 mr-2" /> {/* Lucide Contact Icon */}
+              {/* <ContactIcon className="w-6 h-6 mr-2" /> Lucide Contact Icon */}
               Contact 
             </Link> 
 
@@ -193,3 +194,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
