@@ -17,6 +17,9 @@ import LoadingSpinner from "./components/LoadingSpinner"
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage"
 import PurchaseCancelPage from "./pages/PurchaseCancelPage"
 import Footer from "./components/Footer"
+import Chatbot from "./components/Chatbot";
+
+import ProductDetails from "./pages/ProductDetails";
 
 
 
@@ -40,6 +43,10 @@ function App() {
   return (
     <div className='min-h-screen bg-gray-900 text-white relative overflow-hidden'>
     {/* Background gradient */}
+   
+
+
+
     <div className='absolute inset-0 overflow-hidden'>
       <div className='absolute inset-0'>
         <div className='absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(255,223,186,0.4)_0%,rgba(184,134,11,0.3)_45%,rgba(34,34,34,0.8)_100%)]' />
@@ -60,10 +67,15 @@ function App() {
       <Route path="/purchase-success" element={user ? <PurchaseSuccessPage/> : <Navigate to="/login"/>}/>
       <Route path="/purchase-cancel" element={user ? <PurchaseCancelPage/> : <Navigate to="/login"/>}/>
       <Route path="/contact" element={<Contact/> } />
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
+    
+            <Chatbot />
+       
     <Footer />
   </div>
   <Toaster/>
+  
   </div>
   )
 }
