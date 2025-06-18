@@ -10,6 +10,7 @@ import paymentRoutes from "./routes/payment.route.js"
 import analyticsRoutes from "./routes/analytics.route.js"
 import reviewRoutes from "./routes/review.route.js";
 import cors from "cors"
+import path from "path";
 
 
 
