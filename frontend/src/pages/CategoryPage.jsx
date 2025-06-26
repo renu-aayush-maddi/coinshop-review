@@ -230,23 +230,22 @@ const CategoryPage = () => {
 	const { category } = useParams();
 	const navigate = useNavigate();
 
-	// ✅ Show toast on load
 	const [showToast, setShowToast] = useState(true);
 
 	const handleCloseToast = () => {
 		setShowToast(false);
 	};
 
-	// ✅ Auto-hide toast after 10 seconds
+	
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setShowToast(false);
 		}, 10000);
 
-		return () => clearTimeout(timer); // Clean up
+		return () => clearTimeout(timer); 
 	}, []);
 
-	// ✅ Fetch products by category
+	
 	useEffect(() => {
 		fetchProductsByCategory(category);
 	}, [fetchProductsByCategory, category]);
@@ -254,7 +253,7 @@ const CategoryPage = () => {
 	return (
 		<div className='min-h-screen relative'>
 
-			{/* ✅ Reviewer Toast */}
+			
 			{showToast && (
 				<div className="fixed top-6 right-6 z-50 bg-white border border-emerald-300 rounded-lg shadow-lg p-4 w-96 text-sm text-gray-800 animate-slideIn">
 					<button
@@ -277,7 +276,7 @@ const CategoryPage = () => {
 				</div>
 			)}
 
-			{/* ✅ Main Page Content */}
+			
 			<div className='relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16'>
 				<div className='flex items-center justify-between mb-6'>
 					<button

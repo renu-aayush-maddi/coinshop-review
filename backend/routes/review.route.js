@@ -26,12 +26,12 @@ import {
 
 const router = express.Router();
 
-// Public routes
+
 router.get("/tags/most-used", getMostUsedTags);
 router.get("/:productId", getProductReviews);
 router.get("/stats/:productId", getReviewStats);
 
-// Protected routes (require authentication)
+
 router.post("/", protectRoute, addReview);
 router.put("/:reviewId", protectRoute, updateReview);
 router.delete("/:reviewId", protectRoute, deleteReview);

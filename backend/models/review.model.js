@@ -60,10 +60,9 @@ const reviewSchema = new mongoose.Schema(
       maxlength: [500, "Review must be less than 500 characters"],
     },
     image: {
-      type: String, // Cloudinary URL
+      type: String, 
       validate: {
         validator: function(v) {
-          // Basic URL validation for image
           return !v || /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(v) || 
                  v.includes('cloudinary.com');
         },
@@ -77,7 +76,7 @@ const reviewSchema = new mongoose.Schema(
     },
     verified: {
       type: Boolean,
-      default: false // Can be set to true if user purchased the product
+      default: false 
     }
   },
   {
@@ -85,19 +84,15 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// Compound index to ensure one review per user per product
 reviewSchema.index({ user: 1, product: 1 }, { unique: true });
 
-// Index for efficient querying
 reviewSchema.index({ product: 1, createdAt: -1 });
 reviewSchema.index({ product: 1, rating: -1 });
 
-// Virtual for checking if review has content
 reviewSchema.virtual('hasContent').get(function() {
   return !!(this.rating || this.review || this.image);
 });
 
-// Pre-save validation to ensure at least one field is provided
 reviewSchema.pre('save', function(next) {
   if (!this.rating && (!this.review || !this.review.trim()) && !this.image) {
     const error = new Error('Review must contain at least a rating, review text, or image');
@@ -106,7 +101,6 @@ reviewSchema.pre('save', function(next) {
   next();
 });
 
-// Static method to get average rating for a product
 reviewSchema.statics.getAverageRating = async function(productId) {
   try {
     const pipeline = [
@@ -128,7 +122,7 @@ reviewSchema.statics.getAverageRating = async function(productId) {
   }
 };
 
-// Static method to get review statistics for a product
+
 reviewSchema.statics.getReviewStats = async function(productId) {
   try {
     const reviews = await this.find({ product: productId });
@@ -161,12 +155,11 @@ reviewSchema.statics.getReviewStats = async function(productId) {
   }
 };
 
-// Instance method to check if review is helpful
+
 reviewSchema.methods.isHelpful = function(threshold = 3) {
   return this.helpfulCount >= threshold;
 };
 
-// Transform output to include virtual fields
 reviewSchema.set('toJSON', { 
   virtuals: true,
   transform: function(doc, ret) {

@@ -249,7 +249,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="flex w-full relative flex-col overflow-hidden rounded-lg border border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 bg-gray-900">
-      {/* Product Image */}
+      
       <div 
         onClick={() => navigate(`/product/${product._id}`)}
         className="cursor-pointer relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl group"
@@ -262,7 +262,7 @@ const ProductCard = ({ product }) => {
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
       </div>
 
-      {/* Product Info */}
+      
       <div className="mt-4 px-5 pb-5 flex-1 flex flex-col">
         <div 
           onClick={() => navigate(`/product/${product._id}`)}
@@ -272,7 +272,7 @@ const ProductCard = ({ product }) => {
             {product.name}
           </h5>
           
-          {/* Rating Display */}
+          
           <div className="flex items-center gap-2 mt-2">
             {avgRating ? (
               <>
@@ -289,7 +289,7 @@ const ProductCard = ({ product }) => {
             )}
           </div>
 
-          {/* Review Count */}
+         
           {reviewsWithText > 0 && (
             <div className="flex items-center gap-1 mt-1">
               <MessageCircle className="w-4 h-4 text-gray-400" />
@@ -300,12 +300,12 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        {/* Price */}
+       
         <div className="mt-3 mb-4">
           <span className="text-3xl font-bold text-emerald-400">₹{product.price}</span>
         </div>
 
-        {/* Tags */}
+       
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
             {tags.slice(0, 3).map((tag, idx) => (
@@ -319,7 +319,7 @@ const ProductCard = ({ product }) => {
           </div>
         )}
 
-        {/* Action Buttons */}
+      
         <div className="mt-auto space-y-3">
           <button
             className="w-full flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
@@ -341,7 +341,7 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        {/* Review Form */}
+        
         {showReviewForm && user && (
           <div className="mt-4">
             <RatingForm 
@@ -360,7 +360,7 @@ const ProductCard = ({ product }) => {
           </p>
         )}
 
-        {/* Recent Reviews Preview */}
+       
         {reviews.length > 0 && (
           <div className="mt-4 pt-4 border-t border-gray-700">
             <h4 className="text-sm font-semibold text-white mb-2">Recent Reviews:</h4>

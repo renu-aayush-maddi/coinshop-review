@@ -72,21 +72,19 @@ export const addReview = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    // Validation
+
     if (!rating && !review && !image) {
       return res.status(400).json({ 
         message: "Please provide at least a rating, review text, or image." 
       });
     }
 
-    // Validate rating if provided
     if (rating && (rating < 1 || rating > 5)) {
       return res.status(400).json({ 
         message: "Rating must be between 1 and 5." 
       });
     }
 
-    // Validate review text length if provided
     if (review && review.trim().length < 5) {
       return res.status(400).json({ 
         message: "Review must be at least 5 characters long." 
@@ -99,7 +97,6 @@ export const addReview = async (req, res) => {
       });
     }
 
-    // Check if user has already reviewed this product
     const existing = await Review.findOne({ user: userId, product: productId });
     if (existing) {
       return res.status(400).json({ 
@@ -107,7 +104,7 @@ export const addReview = async (req, res) => {
       });
     }
 
-    // Handle image upload to Cloudinary if provided
+
     let cloudinaryResponse = null;
     if (image) {
       try {
@@ -127,7 +124,6 @@ export const addReview = async (req, res) => {
       }
     }
 
-    // Create the review
     const reviewData = {
       user: userId,
       product: productId,
@@ -139,7 +135,6 @@ export const addReview = async (req, res) => {
 
     const newReview = await Review.create(reviewData);
 
-    // Populate user data for response
     await newReview.populate("user", "name");
 
     res.status(201).json({
@@ -159,8 +154,7 @@ export const getProductReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ product: req.params.productId })
       .populate("user", "name")
-      .sort({ createdAt: -1 }); // Sort by newest first
-    
+      .sort({ createdAt: -1 }); 
     res.json(reviews);
   } catch (error) {
     console.error("Error in getProductReviews:", error);
@@ -183,7 +177,6 @@ export const getMostUsedTags = async (req, res) => {
 
     const keywordMap = {};
     
-    // Common stop words to exclude
     const stopWords = [
       'this', 'that', 'with', 'have', 'been', 'from', 'very', 'good', 'great',
       'nice', 'best', 'love', 'like', 'really', 'much', 'well', 'just', 'will',
@@ -198,15 +191,15 @@ export const getMostUsedTags = async (req, res) => {
     ];
 
     for (const r of reviews) {
-      // Clean and split the review text
+
       const words = r.review
         .toLowerCase()
-        .replace(/[^\w\s]/g, '') // Remove punctuation
-        .split(/\s+/) // Split by whitespace
+        .replace(/[^\w\s]/g, '')
+        .split(/\s+/) 
         .filter(word => 
-          word.length > 3 && // At least 4 characters
-          !stopWords.includes(word) && // Not a stop word
-          !/^\d+$/.test(word) // Not a number
+          word.length > 3 && 
+          !stopWords.includes(word) && 
+          !/^\d+$/.test(word)
         );
 
       words.forEach((word) => {
@@ -214,7 +207,6 @@ export const getMostUsedTags = async (req, res) => {
       });
     }
 
-    // Get top 15 most used words with at least 2 occurrences
     const tags = Object.entries(keywordMap)
       .filter(([word, count]) => count >= 2)
       .sort((a, b) => b[1] - a[1])
@@ -231,7 +223,6 @@ export const getMostUsedTags = async (req, res) => {
   }
 };
 
-// New endpoint to get review statistics
 export const getReviewStats = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -252,7 +243,6 @@ export const getReviewStats = async (req, res) => {
         reviews.reduce((acc, r) => acc + (r.rating || 0), 0) / stats.totalRatings
       ).toFixed(1);
 
-      // Calculate rating distribution
       reviews.forEach(r => {
         if (r.rating) {
           stats.ratingDistribution[r.rating]++;
@@ -270,14 +260,12 @@ export const getReviewStats = async (req, res) => {
   }
 };
 
-// New endpoint to update a review (optional feature)
 export const updateReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { rating, review, image } = req.body;
     const userId = req.user._id;
 
-    // Find the review and check ownership
     const existingReview = await Review.findById(reviewId);
     if (!existingReview) {
       return res.status(404).json({ message: "Review not found." });
@@ -287,7 +275,6 @@ export const updateReview = async (req, res) => {
       return res.status(403).json({ message: "You can only update your own reviews." });
     }
 
-    // Validation
     if (!rating && !review && !image) {
       return res.status(400).json({ 
         message: "Please provide at least a rating, review text, or image." 
@@ -306,7 +293,6 @@ export const updateReview = async (req, res) => {
       return res.status(400).json({ message: "Review must be less than 500 characters." });
     }
 
-    // Handle image upload if provided
     let cloudinaryResponse = null;
     if (image && image !== existingReview.image) {
       try {
@@ -324,7 +310,6 @@ export const updateReview = async (req, res) => {
       }
     }
 
-    // Update the review
     const updateData = {};
     if (rating) updateData.rating = parseInt(rating);
     if (review !== undefined) updateData.review = review.trim();
@@ -350,7 +335,6 @@ export const updateReview = async (req, res) => {
   }
 };
 
-// New endpoint to delete a review
 export const deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
@@ -361,7 +345,7 @@ export const deleteReview = async (req, res) => {
       return res.status(404).json({ message: "Review not found." });
     }
 
-    // Check if user owns the review or is admin
+
     if (review.user.toString() !== userId.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: "You can only delete your own reviews." });
     }

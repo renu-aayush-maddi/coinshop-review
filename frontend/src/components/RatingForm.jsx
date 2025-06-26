@@ -70,13 +70,13 @@ const RatingForm = ({ productId, onReviewAdded }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Validate file type
+    
     if (!file.type.startsWith('image/')) {
       toast.error("Please select a valid image file");
       return;
     }
 
-    // Validate file size (max 5MB)
+    
     if (file.size > 5 * 1024 * 1024) {
       toast.error("Image size should be less than 5MB");
       return;
@@ -110,7 +110,7 @@ const RatingForm = ({ productId, onReviewAdded }) => {
       
       toast.success("Review submitted successfully!");
       
-      // Reset form
+     
       setRating(0);
       setReview("");
       setImage("");
@@ -157,7 +157,7 @@ const RatingForm = ({ productId, onReviewAdded }) => {
         </div>
       )}
 
-      {/* Rating Section */}
+     
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Rating (Optional)
@@ -165,7 +165,7 @@ const RatingForm = ({ productId, onReviewAdded }) => {
         {renderStars()}
       </div>
 
-      {/* Review Text Section */}
+     
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Review (Optional)
@@ -190,7 +190,7 @@ const RatingForm = ({ productId, onReviewAdded }) => {
         </div>
       </div>
 
-      {/* Image Upload Section */}
+     
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Add Photo (Optional)
@@ -230,7 +230,7 @@ const RatingForm = ({ productId, onReviewAdded }) => {
         )}
       </div>
 
-      {/* Submit Button */}
+     
       <button
         onClick={submitReview}
         disabled={isSubmitting}
